@@ -2,16 +2,10 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "types": ["node"],
+    "types": ["node", "express"],
     "rootDir": "../../",
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
   },
   "include": ["src/**/*.ts", "../../packages/**/*.ts"],
-  "exclude": [
-    "out-tsc",
-    "dist",
-    "jest.config.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts"
-  ]
+  "exclude": []
 }

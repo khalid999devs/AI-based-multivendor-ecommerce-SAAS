@@ -21,7 +21,12 @@
           "main": "apps/auth-service/src/main.ts",
           "tsConfig": "apps/auth-service/tsconfig.app.json",
           "assets": [
-            "apps/auth-service/src/assets"
+            "apps/auth-service/src/assets",
+            {
+              "input": "apps/auth-service/src/swagger_output.json",
+              "output": "apps/auth-service/src/swagger_output.json",
+              "glob": ""
+            }
           ],
           "esbuildOptions": {
             "sourcemap": true,
