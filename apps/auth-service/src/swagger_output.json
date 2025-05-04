@@ -2,16 +2,18 @@
   "swagger": "2.0",
   "info": {
     "title": "Auth Service API",
-    "description": "API here documentation for the Auth Service (Automatically generated swagger documentation)",
+    "description": "API documentation for the Auth Service (Automatically generated swagger documentation)",
     "version": "1.0.0"
   },
   "host": "localhost:6001",
-  "basePath": "/",
-  "schemes": ["http"],
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
   "paths": {
-    "/api/user-registration": {
+    "/user-registration": {
       "post": {
-        "description": "Hi",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -20,13 +22,117 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "Khalid Ahammed"
+                  "example": "any"
                 },
                 "email": {
-                  "example": "Khalidahammeduzzal@gmail.com"
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/verify-user": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "otp": {
+                  "example": "any"
                 },
                 "password": {
-                  "example": "12345678"
+                  "example": "any"
+                },
+                "name": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/login-user": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/forgot-password-user": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/verify-forgot-password-user": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/reset-password-user": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "example": "any"
+                },
+                "newPassword": {
+                  "example": "any"
                 }
               }
             }

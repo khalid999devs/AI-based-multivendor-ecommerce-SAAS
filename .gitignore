@@ -54,3 +54,12 @@ Thumbs.db
 .nx/workspace-data
 
 test-output
+
+# remove all backups
+./backups.txt
+backups.*
+backups.txt
+
+# Next.js
+.next
+out
