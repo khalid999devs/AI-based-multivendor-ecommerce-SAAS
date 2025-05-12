@@ -14,6 +14,7 @@ module.exports = {
         },
         black: {
           border: "#010f1c1a",
+          main: "#000000",
         },
         border: {
           light: "#99999938",
