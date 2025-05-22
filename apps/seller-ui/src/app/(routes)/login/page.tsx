@@ -1,6 +1,5 @@
 "use client";
 
-import GoogleButton from "@/shared/components/GoogleButton";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { Eye, EyeOff } from "lucide-react";
@@ -29,7 +28,7 @@ const Login = () => {
   const loginMutation = useMutation({
     mutationFn: async (data: FormData) => {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/login-user`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/login-seller`,
         data,
         {
           withCredentials: true,
@@ -54,7 +53,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full py-10 min-h-[85vh] bg-[bg-[#f1f1f1]">
+    <div className="w-full py-10 min-h-screen bg-[#f1f1f1]">
       <h1 className="text-4xl font-Poppins font-semibold text-black text-center">
         Login
       </h1>
@@ -74,7 +73,6 @@ const Login = () => {
             </Link>
           </p>
 
-          <GoogleButton />
           <div className="flex items-center my-5 text-gray-400 text-sm">
             <div className="flex-1 border-t border-gray-300" />
             <span className="px-3">or Sign in with Email</span>
