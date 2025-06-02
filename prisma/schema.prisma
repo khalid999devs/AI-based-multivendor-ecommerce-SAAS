@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,32 +7,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model images{
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  file_id   String
-  url       String
-  userId    String?  @db.ObjectId @unique
-  shopId    String?  @db.ObjectId @unique
-  users     users?   @relation(fields: [userId], references: [id])
-  shops     shops?   @relation(fields: [shopId], references: [id])
+model images {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  file_id    String
+  url        String
+  userId     String?   @unique @db.ObjectId
+  shopId     String?   @unique @db.ObjectId
+  productsId String?   @db.ObjectId
+  products   products? @relation(fields: [productsId], references: [id])
+  users      users?    @relation(fields: [userId], references: [id])
+  shops      shops?    @relation(fields: [shopId], references: [id])
 }
 
-model users{
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  email     String   @unique
-  password  String?
-  following String[]
-  avatar    images?
-  shopReviews   shopReviews[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model users {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String        @unique
+  password    String?
+  following   String[]
+  avatar      images?
+  shopReviews shopReviews[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }
 
-model shopReviews{
+model shopReviews {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String?  @db.ObjectId
-  user      users?    @relation(fields: [userId], references: [id])
+  user      users?   @relation(fields: [userId], references: [id])
   rating    Float
   reviews   String?
   createdAt DateTime @default(now())
@@ -42,35 +43,94 @@ model shopReviews{
   shops     shops?   @relation(fields: [shopsId], references: [id])
 }
 
-model shops{
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  bio       String?
-  category  String
-  avatar    images? 
-  coverBanner String?
-  address   String
+model shops {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  bio           String?
+  category      String
+  avatar        images?
+  coverBanner   String?
+  address       String
   opening_hours String?
-  website   String?
-  socialLinks Json[]
-  ratings   Float   @default(0)
-  reviews   shopReviews[]
-  sellerId  String @unique @db.ObjectId
-  sellers   sellers @relation(fields: [sellerId], references: [id]) 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  website       String?
+  socialLinks   Json[]
+  ratings       Float         @default(0)
+  reviews       shopReviews[]
+  sellerId      String        @unique @db.ObjectId
+  sellers       sellers       @relation(fields: [sellerId], references: [id])
+  products      products[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
-model sellers{
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  email     String   @unique
+model sellers {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String   @unique
   phone_number String
-  country   String
-  password  String
-  stripeId String?
-  shop      shops?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  country      String
+  password     String
+  stripeId     String?
+  shop         shops?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
+model site_config {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  categories    String[]
+  subCategories Json
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model discount_codes {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  public_name   String
+  discountType  String
+  discountValue Float
+  discountCode  String   @unique
+  sellerId      String   @db.ObjectId
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+enum productStatus {
+  Active
+  Pending
+  Draft
+}
+
+model products {
+  id                    String        @id @default(auto()) @map("_id") @db.ObjectId
+  title                 String
+  slug                  String        @unique
+  category              String
+  subCategory           String
+  short_description     String
+  detailed_description  String
+  images                images[]
+  video_url             String?
+  tags                  String[]
+  brand                 String?
+  colors                String[]
+  sizes                 String[]
+  starting_date         DateTime?
+  ending_date           DateTime?
+  stock                 Int
+  sale_price            Float
+  regular_price         Float
+  ratings               Float         @default(5)
+  warranty              String?
+  custom_specifications Json?
+  custom_properties     Json
+  isDeleted             Boolean?      @default(false)
+  cashOnDelivery        String?
+  discount_codes        String[]      @db.ObjectId
+  status                productStatus @default(Active)
+  deletedAt             DateTime?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  shopId                String        @db.ObjectId
+  Shop                  shops         @relation(fields: [shopId], references: [id])
+}

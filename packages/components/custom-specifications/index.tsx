@@ -48,7 +48,7 @@ const CustomSpecifications = ({ control, errors }: any) => {
 
             <button
               type="button"
-              className="text-red-500 hover:text-red-700 h-full flex items-center pt-4"
+              className="text-red-500 hover:text-red-700 h-full flex items-center pt-5"
               onClick={() => remove(index)}
             >
               <Trash2 size={20} />
@@ -58,7 +58,10 @@ const CustomSpecifications = ({ control, errors }: any) => {
 
         <button
           className="flex items-center gap-2 text-blue-500 hover:text-blue-600"
-          onClick={() => append({ name: "", value: "" })}
+          onClick={(e) => {
+            e.preventDefault();
+            append({ name: "", value: "" });
+          }}
         >
           <PlusCircle size={20} /> Add Specification
         </button>

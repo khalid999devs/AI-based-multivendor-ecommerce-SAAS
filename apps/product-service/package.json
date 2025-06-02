@@ -1,0 +1,36 @@
+{
+  "name": "@eshop/product-service",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "targets": {
+      "serve": {
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "@eshop/product-service:build",
+          "runBuildTargetDependencies": false
+        },
+        "assets": [
+          "apps/product-service/src/assets",
+          {
+            "input": "apps/product-service/src/swagger_output.json",
+            "output": "apps/product-service/src/swagger_output.json",
+            "glob": ""
+          }
+        ],
+        "configurations": {
+          "development": {
+            "buildTarget": "@eshop/product-service:build:development"
+          },
+          "production": {
+            "buildTarget": "@eshop/product-service:build:production"
+          }
+        }
+      }
+    }
+  }
+}

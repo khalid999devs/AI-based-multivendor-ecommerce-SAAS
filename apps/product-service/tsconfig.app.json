@@ -6,10 +6,6 @@
     "rootDir": "../../",
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
   },
-  "include": [
-    "src/**/*.ts",
-    "../../packages/**/*.ts",
-    "../product-service/src/controllers/product.controller.ts"
-  ],
+  "include": ["src/**/*.ts", "../../packages/**/*.ts"],
   "exclude": []
 }

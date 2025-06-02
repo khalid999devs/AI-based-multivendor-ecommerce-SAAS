@@ -5,10 +5,11 @@ import cors from "cors";
 import proxy from "express-http-proxy";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
-import swaggerUi from "swagger-ui-express";
-import axios from "axios";
+// import swaggerUi from "swagger-ui-express";
+// import axios from "axios";
 import cookieParser from "cookie-parser";
 import { checkPrismaConnection } from "../../../packages/libs/prisma";
+import initializeSiteConfig from "./libs/initializeSiteConfig";
 
 const app = express();
 
@@ -41,11 +42,18 @@ app.get("/gateway-health", (req, res) => {
   res.send({ message: "Welcome to api-gateway!" });
 });
 
+app.use("/product", proxy("http://localhost:6002", { limit: "100mb" }));
 app.use("/", proxy("http://localhost:6001"));
 
 const port = process.env.PORT || 8001;
 const server = app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
-  checkPrismaConnection();
+  try {
+    checkPrismaConnection();
+    initializeSiteConfig();
+    console.log("✅ Site configuration initialized successfully!");
+  } catch (error) {
+    console.error("Error during site config:", error);
+  }
 });
 server.on("error", console.error);

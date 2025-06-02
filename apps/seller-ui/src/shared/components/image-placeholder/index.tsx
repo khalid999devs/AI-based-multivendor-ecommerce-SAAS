@@ -2,6 +2,7 @@
 import { Pencil, WandSparkles, X } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import Spinner from "../../../../../../packages/components/loaders/spinner";
 
 const ImagePlaceHolder = ({
   size,
@@ -11,6 +12,8 @@ const ImagePlaceHolder = ({
   defaultImage = null,
   index = null,
   setOpenImageModal,
+  setSelectedImage,
+  pictureUploadingLoader,
 }: {
   size: string;
   small?: boolean;
@@ -19,6 +22,8 @@ const ImagePlaceHolder = ({
   defaultImage?: string | null;
   index?: any;
   setOpenImageModal?: (openImageModal: boolean) => void;
+  setSelectedImage?: (image: string) => void;
+  pictureUploadingLoader?: boolean;
 }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(defaultImage);
 
@@ -37,7 +42,7 @@ const ImagePlaceHolder = ({
     <div
       className={`relative ${
         small ? "h-[180px]" : "h-[450px]"
-      } w-full cursor-pointer bg-[#1e1e1e] border border-gray-600 rounded-lg flex flex-col items-center justify-center`}
+      } w-full bg-[#1e1e1e] border border-gray-600 rounded-lg flex flex-col items-center justify-center`}
     >
       <input
         type="file"
@@ -52,13 +57,22 @@ const ImagePlaceHolder = ({
           <button
             type="button"
             className="absolute top-3 right-3 p-2 !rounded bg-red-600 shadow-lg"
-            onClick={() => onRemove?.(index!)}
+            onClick={(e) => {
+              e.preventDefault();
+              onRemove?.(index!);
+            }}
+            disabled={pictureUploadingLoader}
           >
             <X size={16} />
           </button>
           <button
             className="top-3 absolute right-[60px] bg-blue-600 shadow-lg p-2 !rounded cursor-pointer"
-            onClick={() => setOpenImageModal?.(true)}
+            onClick={(e) => {
+              e.preventDefault();
+              setOpenImageModal?.(true);
+              setSelectedImage?.(defaultImage!);
+            }}
+            disabled={pictureUploadingLoader}
           >
             <WandSparkles size={16} />
           </button>
@@ -76,12 +90,18 @@ const ImagePlaceHolder = ({
         <Image
           src={imagePreview}
           alt="uploaded"
-          className="w-full h-full object-cover rounded-lg"
+          className={`w-full h-full object-cover rounded-lg ${
+            pictureUploadingLoader ? "opacity-30" : ""
+          }`}
           width={300}
           height={400}
         />
       ) : (
-        <>
+        <div
+          className={`${
+            pictureUploadingLoader ? "opacity-30" : ""
+          } text-center flex flex-col items-center justify-center h-full`}
+        >
           <p
             className={`text-gray-400 ${
               small ? "text-xl" : "text-4xl"
@@ -97,7 +117,13 @@ const ImagePlaceHolder = ({
             Please choose an image <br />
             according to the expected ratio
           </p>
-        </>
+        </div>
+      )}
+
+      {pictureUploadingLoader && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg z-10">
+          <Spinner />
+        </div>
       )}
     </div>
   );
