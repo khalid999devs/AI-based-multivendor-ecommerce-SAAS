@@ -485,9 +485,6 @@ export const getAllProducts = async (
           Shop: true,
         },
         where: baseFillter,
-        orderBy: {
-          totalSales: "desc",
-        },
       }),
       prisma.products.count({ where: baseFillter }),
       prisma.products.findMany({

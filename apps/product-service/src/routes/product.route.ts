@@ -5,6 +5,7 @@ import {
   deleteDiscountCode,
   deleteProduct,
   deleteProductImage,
+  getAllProducts,
   getCategories,
   getDiscountCodes,
   getShopProducts,
@@ -13,6 +14,7 @@ import {
   uploadProductImage,
 } from "../../../product-service/src/controllers/product.controller";
 import isAuthenticated from "../../../../packages/middleware/isAuthenticated";
+import { isSeller } from "../../../../packages/middleware/authorizeRoles";
 
 const router: Router = express.Router();
 
@@ -29,6 +31,8 @@ router.get("/get-shop-products", isAuthenticated, getShopProducts);
 router.delete("/delete-product/:productId", isAuthenticated, deleteProduct);
 router.put("/restore-product/:productId", isAuthenticated, restoreProduct);
 
-router.get("/get-stripe-account-info", isAuthenticated, getStripeAccount);
+router.get("/get-stripe-account", isAuthenticated, isSeller, getStripeAccount);
+
+router.get("/get-all-products", getAllProducts);
 
 export default router;
