@@ -1,7 +1,7 @@
 import Header from "@/shared/widgets/header";
 import "./global.css";
 
-import { Poppins, Roboto } from "next/font/google";
+import { Poppins, Roboto, Oregano } from "next/font/google";
 import Providers from "./providers";
 
 export const metadata = {
@@ -22,6 +22,12 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
+const oregano = Oregano({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-oregano",
+});
+
 export default function RootLayout({
   children,
 }: {
@@ -30,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.variable} ${poppins.variable}`}
+        className={`${roboto.variable} ${poppins.variable} ${oregano.variable}`}
         suppressHydrationWarning
       >
         <Providers>

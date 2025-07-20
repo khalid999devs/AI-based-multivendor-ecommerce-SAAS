@@ -118,6 +118,7 @@ model products {
   starting_date         DateTime?
   ending_date           DateTime?
   stock                 Int
+  totalSales            Int           @default(0)
   sale_price            Float
   regular_price         Float
   ratings               Float         @default(5)

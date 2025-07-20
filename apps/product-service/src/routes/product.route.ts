@@ -8,6 +8,7 @@ import {
   getCategories,
   getDiscountCodes,
   getShopProducts,
+  getStripeAccount,
   restoreProduct,
   uploadProductImage,
 } from "../../../product-service/src/controllers/product.controller";
@@ -27,5 +28,7 @@ router.post("/create-product", isAuthenticated, createProduct);
 router.get("/get-shop-products", isAuthenticated, getShopProducts);
 router.delete("/delete-product/:productId", isAuthenticated, deleteProduct);
 router.put("/restore-product/:productId", isAuthenticated, restoreProduct);
+
+router.get("/get-stripe-account-info", isAuthenticated, getStripeAccount);
 
 export default router;

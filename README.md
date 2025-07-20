@@ -142,6 +142,17 @@ npx nx build <service-name>
 
 ---
 
+## For setting the replicated db (prisma working for mongodb)
+
+1. run window powershell as administrator: mongod --replSet rs0 --dbpath "C:\data\db"
+2. in cmd prompt run: mongosh --host localhost --port 27017
+3. in mongosh run: rs.initiate()
+4. in mongosh run: rs.status()
+5. to stop current replica set run: rs.stepDown()
+6. to stop current mongod run: net stop MongoDB
+
+---
+
 ## 🤝 Contributing
 
 We welcome contributions! Please read our [contributing guidelines](CONTRIBUTING.md) to get started.

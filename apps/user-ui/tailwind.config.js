@@ -30,6 +30,7 @@ module.exports = {
       fontFamily: {
         Roboto: ["var(--font-roboto)", "sans-serif"],
         Poppins: ["var(--font-poppins)", "sans-serif"],
+        Oregano: ["var(--font-oregano)", "cursive"],
       },
     },
   },
